@@ -30,7 +30,7 @@ for(const id of ['photo-input','video-input','library-input'])$('#'+id).onchange
 $('#save').onclick=async()=>{if(busy)return;if(!draft.title.trim()&&!draft.note.trim()&&!draft.mood&&!draft.color&&!draft.media.length){toast('Thêm tâm trạng, màu, ghi chú hoặc một khoảnh khắc nhé.');return;}setBusy(true);$('#entry-title').disabled=true;$('#entry-note').disabled=true;try{const item={...draft,media:[...draft.media],updatedAt:new Date().toISOString()};await writeEntries([item]);entries.set(selected,item);dirty=false;renderCalendar();$('#save-status').textContent='Đã lưu kỷ niệm trên thiết bị này ♡';toast('Đã cất giữ một ngày xinh ♡');navigator.storage?.persist?.().catch(()=>{});}catch{toast('Không lưu được. Bộ nhớ có thể đã đầy; hãy sao lưu và giải phóng dung lượng.');}finally{setBusy(false);$('#entry-title').disabled=false;$('#entry-note').disabled=false;}};
 $('#delete-entry').onclick=async()=>{if(busy||!confirm('Xóa nhật ký, màu và tất cả ảnh/video của ngày này?'))return;setBusy(true);try{await writeEntries([],selected);entries.delete(selected);loadDraft();renderCalendar();toast('Đã xóa nhật ký của ngày này.');}catch{toast('Không thể xóa. Vui lòng thử lại.');}finally{setBusy(false);}};
 for(const [id,delta]of [['prev',-1],['next',1]])$('#'+id).onclick=()=>{month=new Date(month.getFullYear(),month.getMonth()+delta,1);renderCalendar();};
-$('#today').onclick=()=>{if(selected!==key(today)&&!canLeave())return;selected=key(today);month=new Date(today.getFullYear(),today.getMonth(),1);loadDraft();renderCalendar();};
+$('#today').onclick=()=>{if(!canLeave())return;selected=key(today);month=new Date(today.getFullYear(),today.getMonth(),1);loadDraft();renderCalendar();};
 $('#today-label').textContent=`Hôm nay • ${today.toLocaleDateString('vi-VN',{day:'numeric',month:'numeric',year:'numeric'})}`;
 $('#backup-open').onclick=()=>$('#backup-dialog').showModal();
 const toDataURL=blob=>new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(blob);});
@@ -40,3 +40,4 @@ $('#import').onchange=async e=>{const file=e.target.files[0];e.target.value='';i
 addEventListener('beforeunload',e=>{if(dirty||busy){e.preventDefault();e.returnValue='';}});
 try{for(const e of await readAll())entries.set(e.date,e);loadDraft();renderCalendar();}catch{$('#save-status').textContent='Không mở được bộ nhớ. Hãy dùng trình duyệt thường và cho phép lưu dữ liệu.';setBusy(true);}
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
