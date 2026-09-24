@@ -1,4 +1,16 @@
 const $ = s => document.querySelector(s);
+for(const id of ['login-username','register-username']){
+  const input=$('#'+id);
+  if(input){input.type='text';input.removeAttribute('inputmode');}
+}
+const loginUserLabel=$('#login-username')?.closest('label');
+const registerUserLabel=$('#register-username')?.closest('label');
+if(loginUserLabel?.firstChild) loginUserLabel.firstChild.nodeValue='Tên đăng nhập';
+if(registerUserLabel?.firstChild) registerUserLabel.firstChild.nodeValue='Tên đăng nhập';
+if($('#forgot-password')) $('#forgot-password').hidden=true;
+const localNote=document.querySelector('.auth-note');
+if(localNote) localNote.textContent='Chế độ cục bộ: tài khoản và nhật ký chỉ lưu trên trình duyệt/thiết bị này. Hãy sao lưu trước khi chuyển sang cloud.';
+
 const moods = [ ['happy','☀️','Vui vẻ','#ffe49b'],['calm','🌿','Bình yên','#cdebd9'],['grateful','💜','Biết ơn','#e2d5fa'],['sad','🌧️','Buồn chút','#d1e5fa'],['stress','🔥','Căng thẳng','#ffd4c4'] ];
 const key = date => `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
 const today = new Date();
