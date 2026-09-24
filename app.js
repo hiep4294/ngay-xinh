@@ -17,7 +17,7 @@ function renderCalendar(){
  for(let i=0;i<offset;i++){const blank=document.createElement('span');blank.className='blank';grid.append(blank);}
  let count=0;
  for(let n=1;n<=days;n++){const d=key(new Date(month.getFullYear(),month.getMonth(),n)),entry=entries.get(d),mood=moods.find(m=>m[0]===entry?.mood),button=document.createElement('button');if(entry)count++;
- button.className=`day${d===selected?' selected':''}${d===key(today)?' is-today':''}${entry?' has-entry':''}`;button.setAttribute('aria-label',`${dateLabel(d)}${mood?', '+mood[2]:''}${entry?', có nhật ký':''}`);button.setAttribute('aria-pressed',String(d===selected));if(entry?.color)button.style.background=entry.color;
+ button.className=`day${d===selected?' selected':''}${d===key(today)?' is-today':''}${entry?' has-entry':''}`;button.setAttribute('aria-label',`${dateLabel(d)}${mood?', '+mood[2]:''}${entry?', có nhật ký':''}`);button.setAttribute('aria-pressed',String(d===selected));if(entry?.color){button.style.background=entry.color;const rgb=entry.color.slice(1).match(/../g).map(h=>parseInt(h,16));button.style.color=(rgb[0]*299+rgb[1]*587+rgb[2]*114)/1000<140?'#ffffff':'#332b4c';}
  const number=document.createElement('span');number.className='number';number.textContent=n;const emoji=document.createElement('span');emoji.className='emoji';emoji.textContent=mood?.[1]||(entry?'✎':'');button.append(number,emoji);button.onclick=()=>{if(d!==selected&&canLeave()){selected=d;loadDraft();renderCalendar();}};grid.append(button);}
  $('#month-summary').textContent=`${count} ngày đã được giữ lại ♡`;
 }
@@ -40,4 +40,7 @@ $('#import').onchange=async e=>{const file=e.target.files[0];e.target.value='';i
 addEventListener('beforeunload',e=>{if(dirty||busy){e.preventDefault();e.returnValue='';}});
 try{for(const e of await readAll())entries.set(e.date,e);loadDraft();renderCalendar();}catch{$('#save-status').textContent='Không mở được bộ nhớ. Hãy dùng trình duyệt thường và cho phép lưu dữ liệu.';setBusy(true);}
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
+
+for(const label of document.querySelectorAll('.capture')){label.tabIndex=0;label.setAttribute('role','button');label.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();label.querySelector('input').click();}});}
 
