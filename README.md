@@ -2,10 +2,11 @@
 
 Lịch nhật ký tiếng Việt dành cho điện thoại và máy tính.
 
-- Mỗi người có thể tạo tài khoản cục bộ riêng bằng tên đăng nhập + mật khẩu.
-- Nhật ký, ảnh và video được tách riêng theo từng tài khoản trên cùng trình duyệt/thiết bị.
-- Mật khẩu được băm bằng PBKDF2-SHA-256 kèm salt, không lưu dạng văn bản thuần.
-- Tạo tài khoản đầu tiên sẽ sao chép dữ liệu của phiên bản cũ vào tài khoản đó.
+- Hỗ trợ Supabase Auth bằng email + mật khẩu để một tài khoản dùng trên nhiều thiết bị.
+- Nhật ký đồng bộ qua Postgres; ảnh/video lưu trong bucket private Supabase Storage.
+- Row Level Security giới hạn mỗi người chỉ truy cập dữ liệu của chính mình.
+- Realtime cập nhật thay đổi giữa các thiết bị.
+- Bản tài khoản cục bộ cũ vẫn được giữ và có thể mở bằng `?mode=local`.
 - Chọn ngày, viết/sửa/xóa nhật ký.
 - 5 tâm trạng và màu tùy chọn cho từng ngày.
 - Chụp ảnh, quay video bằng trình chọn camera của điện thoại; thêm ảnh/video từ thư viện. Máy tính sẽ mở trình chọn tệp. Hành vi camera phụ thuộc trình duyệt và điện thoại.
@@ -21,7 +22,7 @@ Chọn ngày → chọn tâm trạng/màu → viết ghi chú hoặc thêm ảnh
 
 ## Quyền riêng tư và giới hạn
 
-Tài khoản hiện là tài khoản cục bộ của trình duyệt; chưa có máy chủ tài khoản và chưa đồng bộ tự động giữa thiết bị. GitHub chỉ phục vụ mã nguồn ứng dụng; ảnh, video và nội dung nhật ký không được đẩy lên GitHub. Dữ liệu lưu tại trình duyệt/thiết bị đang dùng, không mã hóa bằng mật khẩu. Không dùng máy chung để lưu nội dung riêng tư. Xóa dữ liệu trang hoặc mất thiết bị có thể làm mất nhật ký: hãy tải bản sao lưu thường xuyên, giữ tệp riêng tư và thử khôi phục.
+Khi Supabase được cấu hình, GitHub Pages chỉ phục vụ frontend; nội dung nhật ký lưu trong Postgres và media lưu trong bucket private. Frontend chỉ dùng publishable/anon public key; không được đặt service_role hoặc secret key trong repository. RLS và Storage policies là lớp kiểm soát bắt buộc để tách dữ liệu theo tài khoản.
 
 Tệp ảnh/video giới hạn 100 MB mỗi tệp. Tổng dung lượng phụ thuộc bộ nhớ trình duyệt. Sao lưu nhiều video cần RAM và dung lượng trống tương ứng. Font Google được tải khi có mạng, có font hệ thống dự phòng.
 
@@ -38,6 +39,8 @@ GitHub Pages: Settings → Pages → Deploy from a branch → `main` → `/ (roo
 Mở bằng Safari trên iPhone hoặc Chrome trên Android. Thử chụp ảnh, quay video ngắn, lưu nhật ký, tải lại trang; xuất bản sao lưu và khôi phục trên trình duyệt khác. Việc chọn camera và định dạng video cần xác minh trên thiết bị thật.
 
 
-## Tài khoản
+## Tài khoản và đồng bộ
 
-GitHub Pages là web tĩnh nên cơ chế hiện tại phù hợp để nhiều người dùng chung một thiết bị mà không lẫn dữ liệu. Nếu cần cùng một tài khoản đăng nhập trên nhiều điện thoại/máy tính và tự đồng bộ, cần bổ sung backend Authentication + Database + Storage (ví dụ Supabase hoặc Firebase).
+Cloud mode dùng Supabase Auth + Database + Storage + Realtime. Cấu hình chi tiết xem `SUPABASE_SETUP.md` và schema xem `supabase/schema.sql`.
+
+Nếu `config.js` chưa có thông tin Supabase, ứng dụng tự chạy bản local cũ để không làm gián đoạn dữ liệu đang có.
