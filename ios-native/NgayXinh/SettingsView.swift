@@ -60,7 +60,7 @@ struct SettingsView: View {
             .navigationTitle("Cài đặt")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Xong") { dismiss() }
                 }
             }
