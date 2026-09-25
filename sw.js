@@ -1,5 +1,8 @@
-const CACHE='ngay-xinh-v3';
-const CORE=['./','./index.html','./style.css','./app.js','./app-local.js','./app-supabase.js','./config.js','./icon.svg','./manifest.json'];
+const CACHE='ngay-xinh-v4';
+const CORE=[
+  './','./index.html','./style.css','./app.js','./app-local.js','./app-supabase.js',
+  './config.js','./ios-install.js','./icon.svg','./apple-touch-icon.png','./manifest.json'
+];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)));
   self.skipWaiting();
