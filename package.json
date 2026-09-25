@@ -1,0 +1,28 @@
+{
+  "name": "ngay-xinh",
+  "version": "1.0.0",
+  "description": "Lịch nhật ký tiếng Việt dành cho điện thoại và máy tính.",
+  "main": "app.js",
+  "scripts": {
+    "build": "esbuild src/supabase.js --bundle --format=esm --minify --outfile=vendor/supabase.js",
+    "check": "node --check app.js && node --check accounts.js && node --check cloud-storage.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiep4294/ngay-xinh.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hiep4294/ngay-xinh/issues"
+  },
+  "homepage": "https://github.com/hiep4294/ngay-xinh#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "2.117.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  },
+  "private": true
+}
