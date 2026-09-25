@@ -22,6 +22,12 @@
     <true/>
     <key>NSFaceIDUsageDescription</key>
     <string>Ngày Xinh dùng Face ID để bảo vệ nhật ký riêng của bạn.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Ngày Xinh cần camera để bạn chụp ảnh và quay video lưu vào nhật ký.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Ngày Xinh cần micro để ghi âm khi bạn quay video cho nhật ký.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Ngày Xinh cần quyền truy cập thư viện để bạn chọn ảnh và video cho nhật ký.</string>
     <key>UIApplicationSceneManifest</key>
     <dict>
         <key>UIApplicationSupportsMultipleScenes</key>
