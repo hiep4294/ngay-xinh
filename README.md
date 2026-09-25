@@ -44,3 +44,12 @@ Mở bằng Safari trên iPhone hoặc Chrome trên Android. Thử chụp ảnh,
 Cloud mode dùng Supabase Auth + Database + Storage + Realtime. Cấu hình chi tiết xem `SUPABASE_SETUP.md` và schema xem `supabase/schema.sql`.
 
 Nếu `config.js` chưa có thông tin Supabase, ứng dụng tự chạy bản local cũ để không làm gián đoạn dữ liệu đang có.
+
+
+## Cài trên iPhone
+
+Mở https://hiep4294.github.io/ngay-xinh/ bằng Safari trên iPhone → Chia sẻ → **Thêm vào Màn hình chính** → **Thêm**.
+
+Bản PWA chạy ở chế độ standalone như một ứng dụng riêng, dùng cùng Supabase Auth/Database/Storage nên tài khoản và nhật ký đồng bộ giữa iPhone và máy tính.
+
+Nếu muốn phát hành qua App Store, có thể dùng cùng backend Supabase và bọc frontend hiện tại bằng Capacitor hoặc viết client SwiftUI riêng.
